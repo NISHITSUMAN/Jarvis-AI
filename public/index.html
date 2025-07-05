@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AnonTalk</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+  </style>
+</head>
+<body>
+  <div id="chat-container">
+    <div id="chat-header">
+  💬 AnonTalk <span id="user-count">— 0 online</span>
+      <button id="theme-toggle" title="Toggle Theme">🌓</button>
+    </div>
+    <div id="messages"></div>
+    <form id="message-form" autocomplete="off">
+      <input id="message-input" type="text" placeholder="Type a message..." />
+      <button type="submit">Send</button>
+     <button id="emoji-button" type="button">😊</button>
+    </form>
+    <audio id="ping" src="ping.mp3" preload="auto"></audio>
+  </div>
+ 
+  <audio id="ping" src="https://notificationsounds.com/notification-sounds/event-538/download/mp3" preload="auto"></audio>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+  <script type="module">
+    import 'https://cdn.jsdelivr.net/npm/emoji-picker-element@1.6.2';
+
+    const picker = document.createElement('emoji-picker');
+    picker.style.position = 'absolute';
+    picker.style.bottom = '60px';
+    picker.style.right = '20px';
+    picker.addEventListener('emoji-click', event => {
+      document.getElementById('message-input').value += event.detail.unicode;
+    });
+
+    document.getElementById('emoji-button').addEventListener('click', () => {
+      if (!document.body.contains(picker)) {
+        document.body.appendChild(picker);
+      } else {
+        picker.remove();
+      }
+    });
+  </script>
+</body>
+</html>
